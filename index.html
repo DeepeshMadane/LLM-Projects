@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Generator & Validator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Knowledge Quiz</h1>
+        <form method="POST">
+            <label for="category">Choose a Topic:</label>
+            <select id="category" name="category">
+                <option value="Sports" {% if category == 'Sports' %}selected{% endif %}>Sports</option>
+                <option value="History" {% if category == 'History' %}selected{% endif %}>History</option>
+                <option value="Geography" {% if category == 'Geography' %}selected{% endif %}>Geography</option>
+            </select>
+            <button type="submit" name="generate">Generate Question</button>
+            
+            {% if question %}
+            <div class="question-box">
+                <p><strong>Question:</strong> {{ question }}</p>
+                <input type="hidden" name="question" value="{{ question }}">
+                <label for="user_answer">Your Answer:</label>
+                <input type="text" id="user_answer" name="user_answer" value="{{ user_answer or '' }}">
+                <button type="submit" name="validate">Validate Answer</button>
+            </div>
+            {% endif %}
+            
+            {% if feedback %}
+            <div class="feedback">
+                <p>{{ feedback }}</p>
+            </div>
+            {% endif %}
+        </form>
+    </div>
+</body>
+</html>
